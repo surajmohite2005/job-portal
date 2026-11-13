@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - JobPortal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="/auth.js"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuthentication().then(user => {
+                if (user) {
+                    loadUserInfo(user.user);
+                }
+            });
+        });
+    </script>
+    <nav class="bg-white/80 backdrop-blur-lg border-b border-white/20 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <a href="/" class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">JobPortal</a>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <a href="/" class="text-gray-700 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="/jobs" class="text-gray-700 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium">Jobs</a>
+                    <a href="/about" class="text-gray-700 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium">About</a>
+                    <button onclick="logout()" class="text-red-600 hover:text-red-800 px-2 py-2 rounded-md text-sm font-medium">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8 animate-fade-in">
+            <h2 class="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-2">Dashboard</h2>
+            <p class="text-gray-600 text-lg">Manage your career journey from here</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 animate-slide-up">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Applications</p>
+                        <p class="text-3xl font-bold text-indigo-600" id="totalApplications">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-paper-plane text-white text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 animate-slide-up" style="animation-delay: 0.1s">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Posted/Saved Jobs</p>
+                        <p class="text-3xl font-bold text-green-600" id="jobCount">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-briefcase text-white text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300 animate-slide-up" style="animation-delay: 0.2s">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Profile Views</p>
+                        <p class="text-3xl font-bold text-orange-600" id="profileViews">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-eye text-white text-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 mb-8 animate-fade-in">
+            <div class="flex items-center space-x-6 mb-6">
+                <div class="w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <i class="fas fa-user text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-1">Your Profile</h3>
+                    <p class="text-gray-600">Manage your professional information</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
+                    <label class="block text-sm font-medium text-blue-700 mb-1">Full Name</label>
+                    <p id="displayName" class="text-lg font-semibold text-gray-900">Loading...</p>
+                </div>
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border border-green-100">
+                    <label class="block text-sm font-medium text-green-700 mb-1">Email</label>
+                    <p id="displayEmail" class="text-lg font-semibold text-gray-900">Loading...</p>
+                </div>
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-4 border border-purple-100">
+                    <label class="block text-sm font-medium text-purple-700 mb-1">Role</label>
+                    <p id="displayRole" class="text-lg font-semibold text-gray-900 capitalize">Loading...</p>
+                </div>
+                <div class="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl p-4 border border-orange-100">
+                    <label class="block text-sm font-medium text-orange-700 mb-1">Member Since</label>
+                    <p id="memberSince" class="text-lg font-semibold text-gray-900">Loading...</p>
+                </div>
+            </div>
+        </div>
+        <div id="jobSeekerFeatures" class="hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 hover:shadow-2xl transition-all duration-300">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-search text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-gray-900">Find Your Dream Job</h4>
+                            <p class="text-gray-600">Discover amazing opportunities</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed">Browse thousands of job opportunities from top companies. Use our advanced filters to find the perfect match for your skills and career goals.</p>
+                    <div class="space-y-4">
+                        <button onclick="window.location.href='/jobs.html'" class="w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-search mr-2"></i>Search Jobs
+                        </button>
+                        <button onclick="window.location.href='/applications.html'" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-file-alt mr-2"></i>My Applications
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 hover:shadow-2xl transition-all duration-300">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-user-edit text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-gray-900">Profile & Resume</h4>
+                            <p class="text-gray-600">Enhance your visibility</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed">Complete your profile and upload your resume to increase your chances of getting noticed by recruiters and landing interviews.</p>
+                    <div class="space-y-4">
+                        <button onclick="window.location.href='/profile.html'" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-user-edit mr-2"></i>Edit Profile
+                        </button>
+                        <button onclick="window.location.href='/resume.html'" class="w-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-teal-700 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-file-upload mr-2"></i>Upload Resume
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900">Recent Applications</h3>
+                    <button onclick="window.location.href='/applications.html'" class="text-indigo-600 hover:text-indigo-800 font-medium">View All</button>
+                </div>
+                <div id="recentApplications" class="space-y-4">
+                    <div class="flex items-center justify-center py-8">
+                        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="employerFeatures" class="hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 hover:shadow-2xl transition-all duration-300">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-plus-circle text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-gray-900">Post New Jobs</h4>
+                            <p class="text-gray-600">Find the perfect candidates</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed">Create compelling job listings to attract top talent. Manage applications and connect with qualified candidates efficiently.</p>
+                    <div class="space-y-4">
+                        <button onclick="toggleJobForm()" id="toggleJobBtn" class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-plus mr-2"></i>Post a Job
+                        </button>
+                        <button onclick="window.location.href='/posted-jobs.html'" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-briefcase mr-2"></i>My Posted Jobs
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 hover:shadow-2xl transition-all duration-300">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-users text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-gray-900">Manage Candidates</h4>
+                            <p class="text-gray-600">Review applications</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed">View and manage all candidate applications. Filter, sort, and communicate with potential hires for your open positions.</p>
+                    <div class="space-y-4">
+                        <button onclick="window.location.href='/applications.html'" class="w-full bg-gradient-to-r from-orange-600 to-amber-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-orange-700 hover:to-amber-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-file-alt mr-2"></i>View All Applications
+                        </button>
+                        <button onclick="viewMessages()" class="w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-envelope mr-2"></i>Messages
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900">Recent Applications Received</h3>
+                    <button onclick="window.location.href='/applications.html'" class="text-indigo-600 hover:text-indigo-800 font-medium">View All</button>
+                </div>
+                <div id="jobApplications" class="space-y-4">
+                    <div class="flex items-center justify-center py-8">
+                        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="jobPostModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg relative animate-fade-in" style="max-height:90vh;overflow-y:auto;">
+            <button onclick="toggleJobForm()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+            <h3 class="text-2xl font-bold mb-4 text-gray-900">Post a New Job</h3>
+            <form id="jobPostForm" class="space-y-5 bg-white p-4 rounded-xl shadow-md" enctype="multipart/form-data">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Job Title *</label>
+                    <input name="title" type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="e.g. Software Engineer">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Company Name *</label>
+                    <input name="company" type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="e.g. TechCorp Inc.">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Job Description *</label>
+                    <textarea name="description" required rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="Describe the job role and requirements"></textarea>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Location *</label>
+                        <input name="location" type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="e.g. Remote, New York">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Application Deadline *</label>
+                        <input name="applicationDeadline" id="jobDeadlineInput" type="date" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Job Type *</label>
+                        <select name="jobType" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Select</option>
+                            <option value="full-time">Full-time</option>
+                            <option value="part-time">Part-time</option>
+                            <option value="contract">Contract</option>
+                            <option value="internship">Internship</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Work Mode *</label>
+                        <select name="workMode" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Select</option>
+                            <option value="remote">Remote</option>
+                            <option value="onsite">On-site</option>
+                            <option value="hybrid">Hybrid</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Experience Level *</label>
+                    <input name="experience" type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="e.g. 5+ years">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Requirements (comma-separated) *</label>
+                    <input name="requirements" type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="e.g. JavaScript, React, Node.js">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Skills (comma-separated) *</label>
+                    <input name="skills" type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="e.g. Communication, Problem-solving">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Job Image (optional)</label>
+                    <input name="image" id="jobImageInput" type="file" accept="image/*" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500">
+                    <div id="jobImagePreview" class="mt-2"></div>
+                </div>
+                <div>
+                    <div id="jobPostError" class="text-red-600 text-sm mb-2"></div>
+                    <div id="jobPostSuccess" class="text-green-600 text-sm mb-2"></div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 mt-2">
+                        <i class="fas fa-plus mr-2"></i>Post Job
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        async function loadUserInfo(user) {
+            document.getElementById('displayName').textContent = user.fullName;
+            document.getElementById('displayEmail').textContent = user.email;
+            document.getElementById('displayRole').textContent = user.role;
+
+            const memberSince = new Date(user.createdAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('memberSince').textContent = memberSince;
+
+            if (user.role === 'jobseeker') {
+                document.getElementById('jobSeekerFeatures').classList.remove('hidden');
+                loadJobSeekerData();
+            } else if (user.role === 'employer') {
+                document.getElementById('employerFeatures').classList.remove('hidden');
+                loadEmployerData();
+            }
+        }
+
+        async function loadJobSeekerData() {
+            try {
+                console.log('Loading job seeker data...');
+                const appsResponse = await fetch(`/api/my-applications`, { credentials: 'include' });
+                console.log('Applications response status:', appsResponse.status);
+                if (appsResponse.ok) {
+                    const appsData = await appsResponse.json();
+                    document.getElementById('totalApplications').textContent = appsData.applications.length;
+
+                    const recentAppsContainer = document.getElementById('recentApplications');
+                    if (appsData.applications.length > 0) {
+                        const recentApps = appsData.applications.slice(0, 3);
+                        recentAppsContainer.innerHTML = recentApps.map(app => `
+                            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h5 class="font-semibold text-gray-900">${app.jobTitle || 'Job Title'}</h5>
+                                        <p class="text-sm text-gray-600">${app.company || 'Company'}</p>
+                                    </div>
+                                    <span class="px-2 py-1 text-xs rounded-full ${getStatusBadgeClass(app.status)}">
+                                        ${app.status || 'pending'}
+                                    </span>
+                                </div>
+                                <div class="mt-2 flex justify-between items-center">
+                                    <span class="text-sm text-gray-500">
+                                        Applied: ${new Date(app.appliedAt).toLocaleDateString()}
+                                    </span>
+                                    <a href="/applications.html" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        `).join('');
+                    } else {
+                        recentAppsContainer.innerHTML = `
+                            <div class="text-center py-8">
+                                <i class="fas fa-file-alt text-4xl text-gray-400 mb-3"></i>
+                                <p class="text-gray-600">You haven't applied to any jobs yet</p>
+                                <a href="/jobs.html" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium">
+                                    Browse Jobs
+                                </a>
+                            </div>
+                        `;
+                    }
+                }
+
+                const savedResponse = await fetch(`/api/saved-jobs`, { credentials: 'include' });
+                if (savedResponse.ok) {
+                    const savedData = await savedResponse.json();
+                    document.getElementById('jobCount').textContent = savedData.jobs.length;
+                }
+            } catch (error) {
+                console.error('Error loading job seeker data:', error);
+                console.log('Full error details:', error.message);
+            }
+        }
+
+        function getStatusBadgeClass(status) {
+            switch(status) {
+                case 'shortlisted': return 'bg-green-100 text-green-800';
+                case 'rejected': return 'bg-red-100 text-red-800';
+                case 'hired': return 'bg-blue-100 text-blue-800';
+                case 'reviewing': return 'bg-yellow-100 text-yellow-800';
+                default: return 'bg-gray-100 text-gray-800';
+            }
+        }
+
+        async function loadEmployerData() {
+            try {
+                console.log('Loading employer data...');
+                const appsCountResponse = await fetch('/api/my-applications-count', { credentials: 'include' });
+                if (appsCountResponse.ok) {
+                    const appsCountData = await appsCountResponse.json();
+                    document.getElementById('totalApplications').textContent = appsCountData.totalApplications;
+                }
+                const jobsResponse = await fetch('/api/my-jobs', { credentials: 'include' });
+                if (jobsResponse.ok) {
+                    const jobsData = await jobsResponse.json();
+                    document.getElementById('jobCount').textContent = jobsData.jobs.length;
+                    const appsContainer = document.getElementById('jobApplications');
+                    if (jobsData.jobs.length > 0) {
+                        const jobIds = jobsData.jobs.map(job => job._id);
+                        const allAppsResponse = await fetch('/api/recent-applications', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ jobIds })
+                        });
+                        if (allAppsResponse.ok) {
+                            const allAppsData = await allAppsResponse.json();
+                            if (allAppsData.applications.length > 0) {
+                                appsContainer.innerHTML = allAppsData.applications.map(app => `
+                                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <h5 class="font-semibold text-gray-900">${app.applicantName}</h5>
+                                                <p class="text-sm text-gray-600">${app.jobId?.title || 'N/A'}</p>
+                                            </div>
+                                            <span class="px-2 py-1 text-xs rounded-full ${getStatusBadgeClass(app.status)}">
+                                                ${app.status || 'pending'}
+                                            </span>
+                                        </div>
+                                        <div class="mt-2 flex justify-between items-center">
+                                            <span class="text-sm text-gray-500">
+                                                Applied: ${new Date(app.appliedAt).toLocaleDateString()}
+                                            </span>
+                                            <div class="space-x-2">
+                                                <a href="/applications.html?applicationId=${app.id}" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                                                    View
+                                                </a>
+                                                <button onclick="downloadResume('${app.resumeUrl}')" class="text-green-600 hover:text-green-800 text-sm font-medium">
+                                                    <i class="fas fa-download mr-1"></i>Resume
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('');
+                            } else {
+                                appsContainer.innerHTML = `<div class="text-center py-8"><i class="fas fa-user-times text-4xl text-gray-400 mb-3"></i><p class="text-gray-600">No applications yet for your jobs</p></div>`;
+                            }
+                        }
+                    } else {
+                        appsContainer.innerHTML = `<div class="text-center py-8"><i class="fas fa-plus-circle text-4xl text-gray-400 mb-3"></i><p class="text-gray-600">You have no posted jobs yet.</p><button onclick="toggleJobForm()" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium">Post a Job</button></div>`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading employer data:', error);
+            }
+        }
+        function viewAllApplications() { window.location.href = '/applications.html'; }
+        function downloadResume(resumeUrl) { if (resumeUrl) { window.open(resumeUrl, '_blank'); } }
+        function editProfile() { window.location.href = '/profile.html'; }
+        function uploadResume() { window.location.href = '/resume.html'; }
+        function setMinDeadline() {
+            const today = new Date().toISOString().split('T')[0];
+            const deadlineInput = document.getElementById('jobDeadlineInput');
+            if (deadlineInput) { deadlineInput.min = today; }
+        }
+        function handleJobImagePreview() {
+            const input = document.getElementById('jobImageInput');
+            const preview = document.getElementById('jobImagePreview');
+            if (!input || !preview) return;
+            input.addEventListener('change', function() {
+                preview.innerHTML = '';
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) { preview.innerHTML = `<img src="${e.target.result}" alt="Job Image Preview" class="max-h-40 rounded-lg border mt-2">`; };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+        }
+        function toggleJobForm() {
+            const modal = document.getElementById('jobPostModal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+                setMinDeadline();
+                handleJobImagePreview();
+            } else {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+                document.getElementById('jobPostForm').reset();
+                document.getElementById('jobPostError').textContent = '';
+                document.getElementById('jobPostSuccess').textContent = '';
+                document.getElementById('jobImagePreview').innerHTML = '';
+            }
+        }
+        document.getElementById('jobPostForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const errorElement = document.getElementById('jobPostError');
+            const successElement = document.getElementById('jobPostSuccess');
+            const submitButton = form.querySelector('button[type="submit"]');
+            errorElement.textContent = '';
+            successElement.textContent = '';
+            const requiredFields = ['title', 'company', 'description', 'location', 'jobType', 'workMode', 'experience', 'requirements', 'skills', 'applicationDeadline'];
+            const missingFields = requiredFields.filter(field => !form[field]?.value?.trim());
+            if (missingFields.length > 0) {
+                errorElement.textContent = 'Please fill all required fields.';
+                return;
+            }
+            const deadline = new Date(form.applicationDeadline.value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (deadline < today) {
+                errorElement.textContent = 'Deadline cannot be in the past.';
+                return;
+            }
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Posting...';
+            try {
+                const csrfToken = await getCsrfToken();
+                const formData = new FormData(form);
+                const response = await fetch('/api/jobs', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'X-CSRF-Token': csrfToken
+                    },
+                    body: formData
+                });
+                const result = await response.json();
+                if (!response.ok) { throw new Error(result.message || 'Failed to post job'); }
+                successElement.textContent = 'Job posted successfully!';
+                setTimeout(() => { toggleJobForm(); loadUserInfo(); }, 1500);
+            } catch (error) {
+                console.error('Job posting error:', error);
+                errorElement.textContent = error.message || 'An error occurred while posting the job';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-plus mr-2"></i>Post Job';
+            }
+        });
+    </script>
+</body>
+</html>

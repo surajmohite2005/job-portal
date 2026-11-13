@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - JobPortal</title>
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css)">
+    <script src="/auth.js"></script>
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+
+    <div class="container bg-white p-8 rounded-lg shadow-lg">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-900">Welcome Back</h1>
+            <p class="text-gray-600">Sign in to your account</p>
+        </div>
+        <form id="loginForm" class="space-y-4">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" name="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div id="message" class="hidden text-sm p-3 rounded-md"></div>
+            <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Sign In
+            </button>
+        </form>
+        <div class="mt-4 text-center">
+            <p class="text-sm text-gray-600">
+                Don't have an account? 
+                <a href="/signup" class="font-medium text-indigo-600 hover:text-indigo-500">Sign Up</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const messageEl = document.getElementById('message');
+
+            try {
+                // Fetch CSRF token
+                let csrfToken;
+                try {
+                    csrfToken = await getCsrfToken();
+                } catch (error) {
+                    // Fallback to cookie method
+                    csrfToken = getCsrfTokenFromCookie();
+                    if (!csrfToken) {
+                        throw new Error('Unable to get CSRF token');
+                    }
+                }
+
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-csrf-token': csrfToken,
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage(messageEl, 'Login successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 1500);
+                } else {
+                    showMessage(messageEl, result.message || 'Login failed', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                if (error.message.includes('CSRF token')) {
+                    showMessage(messageEl, 'Security token error. Please refresh the page and try again.', 'error');
+                } else {
+                    showMessage(messageEl, 'Network error. Please try again.', 'error');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

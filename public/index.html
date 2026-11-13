@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Your Dream Job</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <h1 class="text-xl sm:text-2xl font-bold text-indigo-600">JobPortal</h1>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-4" id="navLinks">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="homepage" class="block">
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
+                <div class="mb-12 lg:mb-0">
+                    <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                        Get Your 
+                        <span class="text-indigo-600">Dream Job</span>
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                        Discover thousands of job opportunities with all the information you need. 
+                        Your next career move starts here.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="/jobs" class="bg-indigo-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-lg inline-block text-center">
+                            Find Jobs
+                        </a>
+                        <button onclick="showSignupForm()" class="bg-indigo-600 text-white px-8 py-3 rounded-lg text-lg font-semibold shadow-lg hover:bg-indigo-700 transition duration-300 animate-bounce">
+                            Sign Up to Post a Job
+                        </button>
+                    </div>
+                    
+                    <div class="mt-12 grid grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-indigo-600">10K+</div>
+                            <div class="text-gray-600">Active Jobs</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-indigo-600">5K+</div>
+                            <div class="text-gray-600">Companies</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-indigo-600">50K+</div>
+                            <div class="text-gray-600">Job Seekers</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="relative z-10">
+                        <img 
+                            src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2084&q=80" 
+                            alt="Professional team working together" 
+                            class="rounded-2xl shadow-2xl w-full h-auto"
+                        >
+                    </div>
+                    <div class="absolute -top-4 -right-4 w-72 h-72 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+                    <div class="absolute -bottom-8 -left-4 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+                </div>
+            </div>
+
+            <div class="mt-20 bg-white rounded-2xl shadow-xl p-8">
+                <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Find Your Perfect Job</h2>
+                <div class="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto">
+                    <div class="flex-1">
+                        <input 
+                            type="text" 
+                            placeholder="Job title, keywords, or company" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        >
+                    </div>
+                    <div class="flex-1">
+                        <input 
+                            type="text" 
+                            placeholder="Location" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        >
+                    </div>
+                    <a href="/jobs" class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 whitespace-nowrap inline-block text-center">
+                        Search Jobs
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-gray-900 text-white mt-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="text-center">
+                    <h3 class="text-2xl font-bold mb-4">Ready to Start Your Journey?</h3>
+                    <p class="text-gray-400 mb-6">Join thousands of professionals who found their dream jobs with us.</p>
+                    <button onclick="showSignupForm()" class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300">
+                        Get Started Today
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <div id="signupModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 p-8 relative">
+            <button onclick="hideSignupForm()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Create Account</h2>
+                <p class="text-gray-600">Join thousands of job seekers and employers</p>
+            </div>
+            <form id="signupForm" class="space-y-6">
+                <div>
+                    <label for="fullName" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Enter your full name">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                    <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Enter your email">
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="password" name="password" required minlength="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Create a password (min. 6 characters)">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">I am a:</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="role" value="jobseeker" checked class="mr-2 text-indigo-600">
+                            <span class="text-sm font-medium">Job Seeker</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="role" value="employer" class="mr-2 text-indigo-600">
+                            <span class="text-sm font-medium">Employer</span>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300">
+                    Create Account
+                </button>
+                <div class="text-center">
+                    <p class="text-sm text-gray-600">
+                        Already have an account? 
+                        <button type="button" onclick="showLoginForm()" class="text-indigo-600 hover:text-indigo-700 font-medium">
+                            Sign In
+                        </button>
+                    </p>
+                </div>
+            </form>
+            <div id="signupMessage" class="hidden mt-4 p-3 rounded-lg"></div>
+        </div>
+    </div>
+    <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 p-8 relative">
+            <button onclick="hideLoginForm()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
+                <p class="text-gray-600">Sign in to your account</p>
+            </div>
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                    <input type="email" id="loginEmail" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Enter your email">
+                </div>
+                <div>
+                    <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="loginPassword" name="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Enter your password">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300">
+                    Sign In
+                </button>
+                <div class="text-center">
+                    <p class="text-sm text-gray-600">
+                        Don't have an account? 
+                        <button type="button" onclick="showSignupForm()" class="text-indigo-600 hover:text-indigo-700 font-medium">
+                            Create Account
+                        </button>
+                    </p>
+                </div>
+            </form>
+            <div id="loginMessage" class="hidden mt-4 p-3 rounded-lg"></div>
+        </div>
+    </div>
+    <div id="profileModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 p-8 relative">
+            <button onclick="hideProfileModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">My Profile</h2>
+                <p id="profileRole" class="text-gray-600 capitalize"></p>
+            </div>
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <p id="profileFullName" class="text-lg font-semibold text-gray-900"></p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                    <p id="profileEmail" class="text-lg font-semibold text-gray-900"></p>
+                </div>
+            </div>
+            <div class="mt-8">
+                <a href="/dashboard" class="w-full block text-center bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300">
+                    Go to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthAndPopulateNav();
+        });
+
+        async function checkAuthAndPopulateNav() {
+            try {
+                const response = await fetch('/api/me', { credentials: 'include' });
+                const navLinks = document.getElementById('navLinks');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const user = data.user;
+                    
+                    navLinks.innerHTML = `
+                        <a href="/jobs" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Jobs</a>
+                        <a href="/about" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <button onclick="showProfileModal()" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Profile</button>
+                        <a href="/dashboard" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700">Dashboard</a>
+                        <button onclick="logout()" class="text-red-600 hover:text-red-800 px-3 py-2 rounded-md text-sm font-medium">Logout</button>
+                    `;
+                } else {
+                    navLinks.innerHTML = `
+                        <a href="/jobs" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Jobs</a>
+                        <a href="/about" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <button onclick="showSignupForm()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700">Sign Up</button>
+                    `;
+                }
+            } catch (error) {
+                console.error('Authentication check failed:', error);
+            }
+        }
+        
+        function showSignupForm() {
+            document.getElementById('signupModal').classList.remove('hidden');
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        function hideSignupForm() {
+            document.getElementById('signupModal').classList.add('hidden');
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('signupModal').classList.add('hidden');
+        }
+
+        function hideLoginForm() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+        
+        async function showProfileModal() {
+            try {
+                const response = await fetch('/api/me', { credentials: 'include' });
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('profileFullName').textContent = data.user.fullName;
+                    document.getElementById('profileEmail').textContent = data.user.email;
+                    document.getElementById('profileRole').textContent = data.user.role;
+                    document.getElementById('profileModal').classList.remove('hidden');
+                } else {
+                    alert('Please log in to view your profile.');
+                    window.location.href = '/login.html';
+                }
+            } catch (error) {
+                console.error('Error fetching profile data:', error);
+                alert('An error occurred. Please try again.');
+            }
+        }
+
+        function hideProfileModal() {
+            document.getElementById('profileModal').classList.add('hidden');
+        }
+
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = {
+                fullName: formData.get('fullName'),
+                email: formData.get('email'),
+                password: formData.get('password'),
+                role: formData.get('role')
+            };
+            try {
+                const response = await fetch('/api/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                const messageDiv = document.getElementById('signupMessage');
+                if (response.ok) {
+                    messageDiv.className = 'mt-4 p-3 rounded-lg bg-green-100 text-green-700';
+                    messageDiv.textContent = 'Account created successfully! Redirecting...';
+                    messageDiv.classList.remove('hidden');
+                    setTimeout(() => { window.location.href = '/dashboard'; }, 2000);
+                } else {
+                    messageDiv.className = 'mt-4 p-3 rounded-lg bg-red-100 text-red-700';
+                    messageDiv.textContent = result.message;
+                    messageDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                const messageDiv = document.getElementById('signupMessage');
+                messageDiv.className = 'mt-4 p-3 rounded-lg bg-red-100 text-red-700';
+                messageDiv.textContent = 'Network error. Please try again.';
+                messageDiv.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = {
+                email: formData.get('email'),
+                password: formData.get('password')
+            };
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                const messageDiv = document.getElementById('loginMessage');
+                if (response.ok) {
+                    messageDiv.className = 'mt-4 p-3 rounded-lg bg-green-100 text-green-700';
+                    messageDiv.textContent = 'Login successful! Redirecting...';
+                    messageDiv.classList.remove('hidden');
+                    setTimeout(() => { window.location.href = '/dashboard'; }, 2000);
+                } else {
+                    messageDiv.className = 'mt-4 p-3 rounded-lg bg-red-100 text-red-700';
+                    messageDiv.textContent = result.message;
+                    messageDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                const messageDiv = document.getElementById('loginMessage');
+                messageDiv.className = 'mt-4 p-3 rounded-lg bg-red-100 text-red-700';
+                messageDiv.textContent = 'Network error. Please try again.';
+                messageDiv.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('signupModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) { hideSignupForm(); }
+        });
+
+        document.getElementById('loginModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) { hideLoginForm(); }
+        });
+        
+        document.getElementById('profileModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) { hideProfileModal(); }
+        });
+
+        async function logout() {
+            try {
+                await fetch('/api/logout', { method: 'POST' });
+                window.location.href = '/';
+            } catch (error) {
+                console.error('Logout error:', error);
+                window.location.href = '/';
+            }
+        }
+    </script>
+</body>
+</html>

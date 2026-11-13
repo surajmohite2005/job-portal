@@ -1,0 +1,27 @@
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# User uploaded files - private resumes and uploads
+uploads/*
+!uploads/.gitkeep
+
+# Logs
+*.log
+
+# Build files
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local scratch files
+app.js
+back1.js

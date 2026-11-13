@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Your Dream Job</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-indigo-600">JobPortal</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Jobs</a>
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">About</a>
+                    <a href="#" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
+            <!-- Left Column - Text Content -->
+            <div class="mb-12 lg:mb-0">
+                <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                    Get Your 
+                    <span class="text-indigo-600">Dream Job</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                    Discover thousands of job opportunities with all the information you need. 
+                    Your next career move starts here.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="bg-indigo-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition duration-300 shadow-lg">
+                        Find Jobs
+                    </button>
+                    <button class="border-2 border-indigo-600 text-indigo-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-indigo-50 transition duration-300">
+                        Post a Job
+                    </button>
+                </div>
+                
+                <!-- Stats -->
+                <div class="mt-12 grid grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-indigo-600">10K+</div>
+                        <div class="text-gray-600">Active Jobs</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-indigo-600">5K+</div>
+                        <div class="text-gray-600">Companies</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-indigo-600">50K+</div>
+                        <div class="text-gray-600">Job Seekers</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Image -->
+            <div class="relative">
+                <div class="relative z-10">
+                    <img 
+                        src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2084&q=80" 
+                        alt="Professional team working together" 
+                        class="rounded-2xl shadow-2xl w-full h-auto"
+                    >
+                </div>
+                <!-- Decorative elements -->
+                <div class="absolute -top-4 -right-4 w-72 h-72 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+                <div class="absolute -bottom-8 -left-4 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="mt-20 bg-white rounded-2xl shadow-xl p-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Find Your Perfect Job</h2>
+            <div class="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto">
+                <div class="flex-1">
+                    <input 
+                        type="text" 
+                        placeholder="Job title, keywords, or company" 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    >
+                </div>
+                <div class="flex-1">
+                    <input 
+                        type="text" 
+                        placeholder="Location" 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    >
+                </div>
+                <button class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300 whitespace-nowrap">
+                    Search Jobs
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-4">Ready to Start Your Journey?</h3>
+                <p class="text-gray-400 mb-6">Join thousands of professionals who found their dream jobs with us.</p>
+                <button class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300">
+                    Get Started Today
+                </button>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
